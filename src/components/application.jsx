@@ -1,13 +1,15 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import generateRandomColor from '../lib/generate-random-color';
 import ColorSwatch from './color-swatch';
 import ExpensiveComponent from './expensive-component';
 import GameInput from './game-input';
 import GameStatus from './game-status';
 
+const MemoizedExpensiveComponent = React.memo(ExpensiveComponent);
+
 const Application = () => {
   const [colorGuess, setColorGuess] = useState('');
-  const [correctAnswer, setCorrectAnswer] = useState(generateRandomColor());
+  const [correctAnswer, setCorrectAnswer] = useState(() => generateRandomColor());
   const [hasGuessed, setHasGuessed] = useState(false);
   const [isWinner, setIsWinner] = useState(false);
 
@@ -37,7 +39,7 @@ const Application = () => {
       >
         Reset Color
       </button>
-      <ExpensiveComponent />
+      <MemoizedExpensiveComponent />
     </main>
   );
 };
